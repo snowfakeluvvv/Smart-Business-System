@@ -446,15 +446,6 @@ function closeScanner() {
     }
 }
 
-function closeScanner() {
-    const modal = document.getElementById("scannerModal");
-    modal.classList.add("hidden");
-
-    if (scannerStream) {
-        scannerStream.getTracks().forEach(track => track.stop());
-    }
-}
-
 function simulateScan() {
     const code = prompt("จำลองกรอกบาร์โค้ด");
     if (!code) return;
@@ -469,4 +460,5 @@ function simulateScan() {
     addToCart(index);
     renderCart();
 }
+
 
