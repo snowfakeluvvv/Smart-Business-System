@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Smart Business System | POS</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 <body>
 
@@ -191,9 +192,8 @@ function showSection(id) {
 <div id="scannerModal" class="modal hidden">
     <div class="modal-box">
         <h2>📷 สแกนบาร์โค้ด</h2>
-
-        <video id="scannerVideo" width="100%" height="200"></video>
-
+        <div id="reader" style="width:100%"></div>
+        
         <div style="margin-top:15px;">
             <button onclick="simulateScan()">จำลองสแกน</button>
             <button onclick="closeScanner()">ปิด</button>
@@ -204,3 +204,4 @@ function showSection(id) {
 
 </body>
 </html>
+
