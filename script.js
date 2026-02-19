@@ -407,23 +407,43 @@ function finishTransaction() {
  * BARCODE SCANNER
  ********************/
 
-let scannerStream = null;
+let html5QrCode;
 
 function openScanner() {
-    const modal = document.getElementById("scannerModal");
-    modal.classList.remove("hidden");
+    document.getElementById("scannerModal").classList.remove("hidden");
 
-    const video = document.getElementById("scannerVideo");
+    html5QrCode = new Html5Qrcode("reader");
 
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-        .then(stream => {
-            scannerStream = stream;
-            video.srcObject = stream;
-            video.play();
-        })
-        .catch(err => {
-            alert("ไม่สามารถเปิดกล้องได้");
-        });
+    Html5Qrcode.getCameras().then(devices => {
+        if (devices && devices.length) {
+            html5QrCode.start(
+                { facingMode: "environment" },
+                {
+                    fps: 10,
+                    qrbox: 250
+                },
+                (decodedText) => {
+                    const index = products.findIndex(p => p.barcode === decodedText);
+
+                    if (index !== -1) {
+                        addToCart(index);
+                        renderCart();
+                        closeScanner();
+                        alert("เพิ่มสินค้าแล้ว");
+                    } else {
+                        alert("ไม่พบสินค้า");
+                    }
+                }
+            );
+        }
+    });
+}
+
+function closeScanner() {
+    document.getElementById("scannerModal").classList.add("hidden");
+    if (html5QrCode) {
+        html5QrCode.stop().catch(err => console.log(err));
+    }
 }
 
 function closeScanner() {
@@ -449,3 +469,4 @@ function simulateScan() {
     addToCart(index);
     renderCart();
 }
+
