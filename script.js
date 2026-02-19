@@ -293,24 +293,29 @@ function renderPagination(total, page, id, cb) {
 }
 
 /********************
- * EXPORT CSV
+ * EXPORT EXCEL
  ********************/
 function exportExcel() {
-    let csv = "\uFEFFเวลา,สินค้า,ราคา,จำนวน,รวม\n";
-    history.forEach(h => {
-        csv += `${h.time},${h.name},${h.price},${h.qty},${h.total}\n`;
-    });
 
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
+    if (history.length === 0) {
+        alert("ไม่มีข้อมูลสำหรับ Export");
+        return;
+    }
 
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "sales_history.csv";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    const data = history.map(h => ({
+        เวลา: h.time,
+        สินค้า: h.name,
+        ราคา: h.price,
+        จำนวน: h.qty,
+        รวม: h.total
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, "SalesHistory");
+
+    XLSX.writeFile(workbook, "sales_history.xlsx");
 }
 
 function decreaseCartQty(i) {
@@ -460,5 +465,6 @@ function simulateScan() {
     addToCart(index);
     renderCart();
 }
+
 
 
