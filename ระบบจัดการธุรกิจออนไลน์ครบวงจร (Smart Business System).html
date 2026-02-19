@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Business System | POS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginBox" class="box">
+    <h2>Smart Business System</h2>
+    <p>วิทยาลัยเทคโนโลยีสายมิตร</p>
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="login()">เข้าสู่ระบบ</button>
+    <p id="loginMsg"></p>
+</div>
+
+<!-- SYSTEM -->
+<div id="system" class="hidden">
+
+<!-- HEADER -->
+<header class="topbar">
+    <div></div>
+
+    <div class="title">
+        ระบบจัดการธุรกิจออนไลน์<br>
+        <small>วิทยาลัยเทคโนโลยีสายมิตร</small>
+    </div>
+
+    <div class="right">
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+</header>
+
+<!-- MENU -->
+<section class="main-menu">
+    <button onclick="showSection('dashboardSec')">📊 Dashboard</button>
+    <button onclick="showSection('productSec')">📦 จัดการสินค้า</button>
+    <button onclick="showSection('posSec')">🧾 POS ขายหน้าร้าน</button>
+    <button onclick="showSection('historySec')">📜 ประวัติการขาย</button>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboardSec">
+    <div class="dashboard">
+        <div class="card">จำนวนสินค้า <span id="productCount">0</span></div>
+        <div class="card">ยอดขายรวม <span id="totalRevenue">0</span> บาท</div>
+    </div>
+</section>
+
+<!-- PRODUCT -->
+<section id="productSec" class="hidden">
+    <h3>เพิ่มสินค้า</h3>
+    <input id="pname" placeholder="ชื่อสินค้า" oninput="checkAddProductForm()">
+    <input id="pprice" type="number" placeholder="ราคา" oninput="checkAddProductForm()">
+    <input id="pstock" type="number" placeholder="จำนวน" oninput="checkAddProductForm()">
+    <button id="addBtn" onclick="addProduct()" disabled>เพิ่มสินค้า</button>
+
+    <h3 style="margin-top:20px;">รายการสินค้า</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ลำดับ</th>
+                <th>ชื่อ</th>
+                <th>ราคา</th>
+                <th>คงเหลือ</th>
+                <th>จัดการ</th>
+            </tr>
+        </thead>
+        <tbody id="productList"></tbody>
+    </table>
+    <div id="productPagination" class="pagination"></div>
+</section>
+
+<!-- POS -->
+<section id="posSec" class="hidden">
+    <h2 style="text-align:center;">🧾 ระบบขายหน้าร้าน (POS)</h2>
+
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;">
+
+        <!-- PRODUCT GRID -->
+            <h3>สินค้า</h3>
+
+            <div class="scanner-box">
+                <button class="scan-btn" onclick="openScanner()">
+                    📷 สแกนบาร์โค้ด
+                </button>
+            </div>
+
+            <div id="posProducts" class="pos-grid"></div>
+
+        <!-- CART -->
+        <div class="pos-cart">
+            <h3>ตะกร้าสินค้า</h3>
+            <div id="cartList"></div>
+
+            <hr>
+            <h2>รวม: <span id="posTotal">0</span> บาท</h2>
+
+            <button class="btn-sell" onclick="confirmOrder()">ยืนยันสั่งซื้อ</button>
+
+            <p id="change"></p>
+        </div>
+    </div>
+</section>
+
+<!-- HISTORY -->
+<section id="historySec" class="hidden">
+    <h3>ประวัติการขาย</h3>
+    <button onclick="exportExcel()">📁 Export Excel</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>เวลา</th>
+                <th>สินค้า</th>
+                <th>ราคา</th>
+                <th>จำนวน</th>
+                <th>รวม</th>
+            </tr>
+        </thead>
+        <tbody id="historyList"></tbody>
+    </table>
+
+    <div id="historyPagination" class="pagination"></div>
+</section>
+
+</div>
+
+<script src="script.js"></script>
+
+<script>
+function showSection(id) {
+    const sections = [
+        "dashboardSec",
+        "productSec",
+        "posSec",
+        "historySec"
+    ];
+
+    sections.forEach(sec => {
+        const el = document.getElementById(sec);
+        if (el) el.classList.add("hidden");
+    });
+
+    const target = document.getElementById(id);
+    if (target) target.classList.remove("hidden");
+
+    // ถ้าเข้า POS ให้โหลดสินค้า
+    if (id === "posSec" && typeof openPOS === "function") {
+        openPOS();
+    }
+}
+</script>
+
+<!-- PAYMENT MODAL -->
+<div id="paymentModal" class="modal hidden">
+    <div class="modal-box">
+        <h2>💰 รับเงินลูกค้า</h2>
+
+        <p>ยอดที่ต้องชำระ</p>
+        <h1><span id="payTotal">0</span> บาท</h1>
+
+        <input id="payCash" type="number" placeholder="ลูกค้าจ่ายมา">
+
+        <div style="margin-top:15px;">
+            <button class="btn-sell" onclick="confirmPayment()">ชำระเงิน</button>
+            <button onclick="closePayment()">ยกเลิก</button>
+        </div>
+
+        <p id="payChange"></p>
+    </div>
+</div>
+
+<!-- CHANGE MODAL -->
+<div id="changeModal" class="modal hidden">
+    <div class="modal-box">
+        <h2>💵 เงินทอนลูกค้า</h2>
+
+        <h1 id="finalChange" style="color:#ff9800;">0 บาท</h1>
+
+        <button class="btn-sell" onclick="finishTransaction()">
+            ✅ ยืนยันการทอนเงินสำเร็จ
+        </button>
+    </div>
+</div>
+
+<!-- SCANNER MODAL -->
+<div id="scannerModal" class="modal hidden">
+    <div class="modal-box">
+        <h2>📷 สแกนบาร์โค้ด</h2>
+
+        <video id="scannerVideo" width="100%" height="200"></video>
+
+        <div style="margin-top:15px;">
+            <button onclick="simulateScan()">จำลองสแกน</button>
+            <button onclick="closeScanner()">ปิด</button>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

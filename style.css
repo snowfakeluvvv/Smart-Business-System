@@ -1,0 +1,426 @@
+* { box-sizing:border-box; font-family:"Segoe UI",sans-serif; }
+
+body {
+    margin:0;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+}
+
+.box {
+    width:320px;
+    margin:120px auto;
+    background:#fff;
+    padding:25px;
+    border-radius:18px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+input {
+    width:100%;
+    padding:12px;
+    margin:6px 0;
+    border-radius:10px;
+    border:1px solid #ddd;
+}
+
+button {
+    padding:8px 16px;
+    border-radius:16px;
+    border:none;
+    background:#667eea;
+    color:#fff;
+    cursor:pointer;
+}
+
+button:hover { opacity:.9; }
+
+.hidden { display:none; }
+
+.topbar {
+    background:#fff;
+    margin:15px;
+    padding:15px;
+    border-radius:18px;
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    box-shadow:0 8px 20px rgba(0,0,0,.2);
+}
+
+.title { text-align:center; color:#667eea; font-size:22px; }
+.right { display:flex; justify-content:flex-end; }
+.logout-btn { background:#dc3545; }
+
+.dashboard {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    padding:15px;
+}
+
+.card {
+    background:#fff;
+    padding:20px;
+    border-radius:18px;
+    text-align:center;
+    box-shadow:0 6px 18px rgba(0,0,0,.15);
+}
+
+.card span {
+    display:block;
+    font-size:26px;
+    color:#667eea;
+}
+
+section {
+    background:#fff;
+    margin:15px;
+    padding:20px;
+    border-radius:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+
+table {
+    width:100%;
+    border-collapse:separate;
+    border-spacing:0 10px;
+}
+
+thead th {
+    background:#667eea;
+    color:#fff;
+    padding:12px;
+}
+
+tbody tr {
+    background:#fff;
+    box-shadow:0 6px 15px rgba(0,0,0,.12);
+}
+
+tbody td { padding:12px; text-align:center; }
+
+.manage-box {
+    display:flex;
+    gap:6px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+.btn-edit { background:#17a2b8; }
+.btn-add { background:#28a745; }
+.btn-remove { background:#fd7e14; }
+.btn-delete { background:#dc3545; }
+.danger { background:#dc3545; }
+
+.history-action {
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:12px;
+}
+
+.menu {
+    display: flex;
+    gap: 10px;
+    margin: 0 15px;
+}
+
+.menu button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 18px;
+    background: #fff;
+    color: #667eea;
+    font-weight: bold;
+}
+
+.menu button:hover {
+    background: #667eea;
+    color: #fff;
+}
+
+.page {
+    animation: fade .3s ease;
+}
+
+@keyframes fade {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.pagination button {
+    margin: 0 4px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: none;
+    background: #e0e0e0;
+    cursor: pointer;
+}
+
+.pagination button.active {
+    background: #667eea;
+    color: white;
+    font-weight: bold;
+}
+
+/* ===== MAIN ACTION BUTTON ===== */
+button {
+    padding: 10px 18px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+/* hover premium */
+button:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+}
+
+/* ===== MENU BUTTON ===== */
+section > button {
+    margin: 6px;
+    padding: 12px 22px;
+    font-size: 16px;
+    border-radius: 18px;
+}
+
+/* ===== SELL BUTTON ===== */
+.btn-sell {
+    background: linear-gradient(135deg, #28a745, #4cd964);
+}
+
+/* ===== EDIT NAME ===== */
+.btn-edit {
+    background: linear-gradient(135deg, #17a2b8, #5bc0de);
+}
+
+/* ===== PRICE ===== */
+.btn-price {
+    background: linear-gradient(135deg, #6f42c1, #9f7aea);
+}
+
+/* ===== ADD STOCK ===== */
+.btn-add {
+    background: linear-gradient(135deg, #20c997, #38ef7d);
+}
+
+/* ===== REMOVE STOCK ===== */
+.btn-remove {
+    background: linear-gradient(135deg, #fd7e14, #f6b93b);
+}
+
+/* ===== DELETE ===== */
+.btn-delete {
+    background: linear-gradient(135deg, #dc3545, #ff6b6b);
+}
+
+/* ===== LOGOUT ===== */
+.logout-btn {
+    padding: 8px 20px;
+    font-size: 14px;
+    border-radius: 20px;
+}
+
+/* ===== MANAGE BOX ===== */
+td div {
+    margin-top: 10px;
+    padding: 12px;
+    background: linear-gradient(135deg, #f1f3f8, #ffffff);
+    border-radius: 16px;
+}
+
+/* ===== PAGINATION ===== */
+.pagination button {
+    padding: 8px 16px;
+    font-size: 15px;
+    border-radius: 12px;
+}
+
+.pagination button.active {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+}
+
+.main-menu {
+    text-align: center;
+    margin: 10px 15px;
+    padding: 10px;
+    background: rgba(255,255,255,0.7);
+    border-radius: 18px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.main-menu button {
+    margin: 6px;
+    padding: 14px 26px;
+    font-size: 16px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-box {
+    background: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.modal-box h1 {
+    color: #28a745;
+    margin: 10px 0;
+}
+
+.modal-box input {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 1fr 160px 120px;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.cart-name {
+    font-weight: 500;
+}
+
+.cart-controls {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.cart-controls button {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    font-size: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+
+.btn-minus {
+    background: #ff6b6b;
+    color: white;
+}
+
+.btn-plus {
+    background: #4dabf7;
+    color: white;
+}
+
+.btn-delete {
+    background: #868e96;
+    color: white;
+}
+
+.cart-price {
+    text-align: right;
+    font-weight: bold;
+}
+
+/* ===== FIX POS CART BUTTON SHIFT ===== */
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 1fr 140px 110px;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+}
+
+.cart-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.cart-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.cart-controls button {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+}
+
+.cart-price {
+    text-align: right;
+    font-weight: bold;
+}
+
+.modal-box {
+    animation: pop .25s ease;
+}
+
+@keyframes pop {
+    from { transform: scale(.8); opacity:0; }
+    to { transform: scale(1); opacity:1; }
+}
+
+/* ===== POS GRID ===== */
+.pos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+}
+
+/* ===== SCANNER BUTTON AREA ===== */
+.scanner-box {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.scan-btn {
+    width: 100%;
+    max-width: 260px;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 18px;
+    background: linear-gradient(135deg,#ff9800,#ff5722);
+    color: white;
+}
