@@ -179,11 +179,8 @@ function renderCart() {
             </div>
         `;
     });
-
-    let vat = total * 0.07;
-    let grandTotal = total + vat;
     
-    posTotal.innerText = grandTotal,toFixed(2);
+    posTotal.innerText = total;
 }
 
 
@@ -468,6 +465,7 @@ function simulateScan() {
     addToCart(index);
     renderCart();
 }
+
 
 
 
