@@ -180,7 +180,10 @@ function renderCart() {
         `;
     });
 
-    posTotal.innerText = total;
+    let vat = total * 0.07;
+    let grandTotal = total + vat;
+    
+    posTotal.innerText = grandTotal,toFixed(2);
 }
 
 
@@ -465,6 +468,7 @@ function simulateScan() {
     addToCart(index);
     renderCart();
 }
+
 
 
 
